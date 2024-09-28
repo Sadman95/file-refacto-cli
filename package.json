@@ -1,0 +1,14 @@
+{
+  "name": "file-refacto",
+  "version": "0.0.2",
+  "description": "CLI tool to rename files based on their extension",
+  "main": "index.js",
+  "bin": {
+    "file-refacto": "./index.js"
+  },
+  "author": "sadman-sakib",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^10.0.0"
+  }
+}
