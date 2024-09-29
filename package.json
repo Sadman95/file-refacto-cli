@@ -6,6 +6,10 @@
   "bin": {
     "file-refacto": "./index.js"
   },
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/Sadman95/file-refacto-cli"
+},
   "author": "sadman-sakib",
   "license": "MIT",
   "dependencies": {
