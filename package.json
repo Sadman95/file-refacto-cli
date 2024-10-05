@@ -10,7 +10,8 @@
     "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
-    "release": "release-it"
+    "release": "release-it",
+    "test": "echo 'Error: no test specified'; false"
   },
   "repository": {
     "type": "git",
