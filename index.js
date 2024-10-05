@@ -1,65 +1,91 @@
 #!/usr/bin/env node
-const fs = require("fs");
-const path = require("path");
 const { Command } = require("commander");
+const renameFiles = require("./lib/rename-files");
+const changeExtension = require("./lib/change-extension");
+const renameSerialized = require("./lib/rename-serialized");
 
 const program = new Command();
 
-// Function to recursively walk through directories and rename files
-const renameFiles = (dir, extension, newName) => {
-	fs.readdir(dir, (err, files) => {
-		if (err) {
-			console.error(`Error reading directory ${dir}:`, err);
-			return;
-		}
+/**
+ * CLI tool to rename files by extension, change file extensions, and rename files with a pattern.
+ *
+ * @version 0.0.4
+ * @description This CLI tool allows users to rename files in a directory by their
+ * file extension and base name, change the extension of files in the directory,
+ * or rename files in serial order with a wildcard pattern.
+ */
 
-		files.forEach((file) => {
-			const filePath = path.join(dir, file);
-
-			fs.stat(filePath, (err, stats) => {
-				if (err) {
-					console.error(`Error stating file ${filePath}:`, err);
-					return;
-				}
-
-				if (stats.isDirectory()) {
-					// If it's a directory, recurse into it
-					renameFiles(filePath, extension, newName);
-				} else if (path.extname(file) === extension) {
-					// If it matches the given extension, rename it to the new name
-					const newFilePath = path.join(dir, newName + extension);
-					fs.rename(filePath, newFilePath, (err) => {
-						if (err) {
-							console.error(`Error renaming file ${filePath}:`, err);
-						} else {
-							console.log(`Renamed ${filePath} to ${newFilePath}`);
-						}
-					});
-				}
-			});
-		});
-	});
-};
-
-// Setup the CLI command
+/**
+ * Sets up the 'rename' command to rename files in a directory by file extension and new base name.
+ *
+ * @command rename
+ * @argument {string} <dir> - The root directory to start from.
+ * @argument {string} <extension> - The file extension to rename (e.g., .md).
+ * @argument {string} <newname> - The new base name for the files without extension (e.g., main).
+ */
 program
-	.version("1.1.0")
-	.description(
-		"CLI tool to rename files in a directory by file extension and new filename"
-	)
-	.argument("<dir>", "root directory to start from")
-	.argument("<extension>", "file extension to rename (e.g., .md)")
+	.command("rename")
+	.description("Rename files in a directory by file extension and new filename")
+	.argument("<dir>", "Root directory to start from")
+	.argument("<extension>", "File extension to rename (e.g., .md)")
 	.argument(
 		"<newname>",
-		"new name for the files without extension (e.g., main)"
+		"New name for the files without extension (e.g., main)"
 	)
 	.action((dir, extension, newName) => {
-		// Check if extension starts with a dot
+		// Ensure the extension starts with a dot
 		if (!extension.startsWith(".")) {
 			extension = "." + extension;
 		}
+
 		renameFiles(dir, extension, newName);
 	});
 
-// Parse CLI arguments
+/**
+ * Sets up the 'change-ext' command to change the extension of files in a directory.
+ *
+ * @command change-ext
+ * @argument {string} <dir> - The root directory to start from.
+ * @argument {string} <newext> - The new extension to apply to the files (e.g., .txt).
+ */
+program
+	.command("change-ext")
+	.description("Change the extension of files in a directory")
+	.argument("<dir>", "Root directory to start from")
+	.argument("<newext>", "New extension to apply (e.g., .txt)")
+	.action((dir, newExt) => {
+		// Ensure the new extension starts with a dot
+		if (!newExt.startsWith(".")) {
+			newExt = "." + newExt;
+		}
+
+		changeExtension(dir, newExt);
+	});
+
+/**
+ * Sets up the 'rename-all' command to rename files in serial order using a wildcard pattern.
+ *
+ * @command rename-all
+ * @argument {string} <dir> - The root directory to start from.
+ * @argument {string} <extension> - The file extension to rename (e.g., .md).
+ * @argument {string} <pattern> - The pattern for the new filenames (e.g., brand-*).
+ */
+program
+	.command("rename-all")
+	.description(
+		"Rename files in serial order using a wildcard pattern (e.g., brand-*)"
+	)
+	.argument("<dir>", "Root directory to start from")
+	.argument("<extension>", "File extension to rename (e.g., .md)")
+	.argument("<pattern>", "Pattern for the new filenames (e.g., brand-*)")
+	.action((dir, extension, pattern) => {
+		// Ensure the extension starts with a dot
+		if (!extension.startsWith(".")) {
+			extension = "." + extension;
+		}
+
+		renameSerialized(dir, extension, pattern);
+	});
+
+// Parse and execute the appropriate command based on user input
 program.parse(process.argv);

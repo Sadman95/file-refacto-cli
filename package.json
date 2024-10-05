@@ -1,6 +1,6 @@
 {
   "name": "file-refacto",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "CLI tool to rename files based on their extension",
   "main": "index.js",
   "bin": {
@@ -9,13 +9,62 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
+  "scripts": {
+    "release": "release-it"
+  },
   "repository": {
-  "type": "git",
-  "url": "https://github.com/Sadman95/file-refacto-cli"
-},
+    "type": "git",
+    "url": "https://github.com/Sadman95/file-refacto-cli"
+  },
+  "keywords": [
+    "cli",
+    "file",
+    "refactor",
+    "tool",
+    "nodejs"
+  ],
   "author": "sadman-sakib",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Sadman95/file-refacto-cli/issues"
+  },
+  "homepage": "https://github.com/Sadman95/file-refacto-cli",
   "dependencies": {
-    "commander": "^10.0.0"
+    "@commitlint/cli": "^17.8.1",
+    "@commitlint/config-conventional": "^17.8.1",
+    "@release-it/conventional-changelog": "^8.0.2",
+    "commander": "^10.0.0",
+    "husky": "^8.0.3",
+    "release-it": "^17.7.0"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release v${version}"
+    },
+    "github": {
+      "release": true
+    },
+    "npm": {
+      "publish": false
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "infile": "CHANGELOG.md",
+        "preset": {
+          "name": "conventionalcommits",
+          "types": [
+            {
+              "type": "feat",
+              "section": "Features"
+            },
+            {
+              "type": "fix",
+              "section": "Bug Fixes"
+            },
+            {}
+          ]
+        }
+      }
+    }
   }
 }
