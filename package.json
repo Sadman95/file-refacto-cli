@@ -1,5 +1,5 @@
 {
-  "name": "file-refacto-cli",
+  "name": "file-refacto",
   "version": "0.0.4",
   "description": "CLI tool to rename files based on their extension",
   "main": "index.js",
