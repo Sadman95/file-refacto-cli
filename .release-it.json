@@ -1,0 +1,23 @@
+{
+    "git": {
+        "requireCleanWorkingDir": true,
+        "commit": true,
+        "commitMessage": "chore(release): release v${version}",
+        "tag": true,
+        "push": true,
+        "pushArgs": [
+            "--follow-tags"
+        ]
+    },
+    "npm": {
+        "publish": true
+    },
+    "hooks": {
+        "before:init": "npm run test",
+        "after:bump": "npm run changelog"
+    },
+    "changelog": {
+        "filename": "CHANGELOG.md",
+        "preset": "angular"
+    }
+}

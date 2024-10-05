@@ -10,6 +10,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "release": "release-it",
     "test": "echo 'Error: no test specified'; false"
   },
