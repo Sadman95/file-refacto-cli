@@ -1,6 +1,8 @@
 
 # File Refacto CLI
 
+![npm](https://img.shields.io/npm/dt/file-refacto?label=total%20downloads)
+
 **File Refacto** is a simple CLI tool that helps you rename files in a directory based on their extension and a new filename, or change the file extension recursively. This tool also allows renaming files in serial order using a wildcard pattern, making it perfect for organizing and renaming files in bulk across multiple subdirectories.
 
 ## Features

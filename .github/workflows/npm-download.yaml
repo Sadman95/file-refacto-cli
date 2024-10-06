@@ -1,0 +1,29 @@
+name: Update npm Downloads Badge
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight UTC
+
+jobs:
+  update-downloads:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Get total downloads
+        run: |
+          TOTAL_DOWNLOADS=$(curl -s https://api.npmjs.org/downloads/point/2021-01-01:$(date +%Y-%m-%d)/file-refacto | jq -r '.downloads')
+          echo "Total downloads: $TOTAL_DOWNLOADS"
+
+      - name: Update README
+        run: |
+          sed -i "s/\(Total Downloads:\).*$/\1 $TOTAL_DOWNLOADS/" README.md
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add README.md
+          git commit -m "Update total downloads badge"
+          git push
