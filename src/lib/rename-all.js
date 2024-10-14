@@ -10,7 +10,7 @@ const path = require("path");
  * @param {string} extension - The file extension to filter and rename (e.g., .png).
  * @param {string} pattern - The wildcard pattern for the new filename (e.g., brand-*).
  */
-const renameSerialized = (dir, extension, pattern) => {
+const renameAll = (dir, extension, pattern) => {
 	fs.readdir(dir, (err, files) => {
 		if (err) {
 			console.error(`Error reading directory ${dir}:`, err);
@@ -41,4 +41,4 @@ const renameSerialized = (dir, extension, pattern) => {
 	});
 };
 
-module.exports = renameSerialized;
+module.exports = renameAll;
