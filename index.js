@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 const { Command } = require("commander");
-const renameFiles = require("./lib/rename-files");
-const changeExtension = require("./lib/change-extension");
-const renameSerialized = require("./lib/rename-serialized");
+const renameFiles = require("./src/lib/rename-files");
+const changeExtension = require("./src/lib/change-extension");
+const renameAll = require("./src/lib/rename-all");
 
 const program = new Command();
 
 /**
  * CLI tool to rename files by extension, change file extensions, and rename files with a pattern.
  *
- * @version 0.0.4
+ * @version 0.0.5
  * @description This CLI tool allows users to rename files in a directory by their
  * file extension and base name, change the extension of files in the directory,
  * or rename files in serial order with a wildcard pattern.
@@ -84,7 +84,7 @@ program
 			extension = "." + extension;
 		}
 
-		renameSerialized(dir, extension, pattern);
+		renameAll(dir, extension, pattern);
 	});
 
 // Parse and execute the appropriate command based on user input

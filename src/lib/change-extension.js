@@ -17,6 +17,7 @@ const changeExtension = (dir, newExt) => {
 		files.forEach((file) => {
 			const filePath = path.join(dir, file);
 			const fileExt = path.extname(file);
+			console.log(fileExt, newExt)
 
 			// Skip if the file already has the new extension
 			if (fileExt === newExt) {
