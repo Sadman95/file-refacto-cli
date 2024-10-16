@@ -1,3 +1,8 @@
 module.exports = {
-	setupFilesAfterEnv: ["<rootDir>/jest.setup.js"], // Points to the setup file to run before tests
+	testEnvironment: "node",
+	roots: ["<rootDir>/__tests__"], // Tests located in the tests folder
+	testRegex: ".*\\.test\\.js$",
+	reporters: ["default"],
+	moduleDirectories: ["node_modules"],
+	modulePaths: ["<rootDir>"],
 };
